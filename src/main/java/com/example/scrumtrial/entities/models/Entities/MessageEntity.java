@@ -1,4 +1,4 @@
-package com.example.scrumtrial.entities.models;
+package com.example.scrumtrial.entities.models.Entities;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;

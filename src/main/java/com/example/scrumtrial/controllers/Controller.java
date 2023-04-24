@@ -1,12 +1,11 @@
-package com.example.scrumtrial;
+package com.example.scrumtrial.controllers;
 
-import com.example.scrumtrial.entities.models.MessageEntity;
-import com.example.scrumtrial.entities.models.UserEntity;
+import com.example.scrumtrial.entities.models.Entities.MessageEntity;
+import com.example.scrumtrial.entities.models.Entities.UserEntity;
 import com.example.scrumtrial.entities.repositories.MessageRepository;
 import com.example.scrumtrial.entities.repositories.UserRepository;
 import com.github.javafaker.Faker;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +16,6 @@ public class Controller {
     private final UserRepository ur;
     private final MessageRepository mr;
     private  final Random r = new Random();
-
     private final Faker f;
 
     public Controller(UserRepository ur, MessageRepository mr){
@@ -27,7 +25,7 @@ public class Controller {
     }
 
     @GetMapping("/")
-    public String user(){
+    public String user(@CookieValue("loginCred") Integer hash){
         UserEntity tue = new UserEntity(f.name().username(), f.name().nameWithMiddle());
         ur.save(tue);
         return "sucess";

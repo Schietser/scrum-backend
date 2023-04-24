@@ -1,12 +1,13 @@
-package com.example.scrumtrial.entities.models;
+package com.example.scrumtrial.entities.models.Entities;
 
-import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Email;
 import java.util.Objects;
+import java.util.Optional;
 
 @Document("users")
 @Getter
@@ -16,12 +17,9 @@ public class UserEntity {
 
     @Setter
     String name;
-
     @Email
     String email;
-
-
-    String sms;
+    Optional<String> sms = Optional.empty();
 
     public UserEntity(String name, String email){
         this.id = (long) Objects.hash(name, email);
