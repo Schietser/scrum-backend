@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
+import java.time.ZonedDateTime;
 import java.util.Objects;
-import java.util.Optional;
 
 @Document("users")
 @Getter
@@ -21,12 +22,16 @@ public class UserEntity {
     @Setter
     String name;
     @Email
+    @Indexed(unique = true)
     String email;
-    Optional<String> sms = Optional.empty();
+    @Indexed(unique = true)
+    String sms;
+    ZonedDateTime lastLogin;
 
     public UserEntity(String name, String email){
         this.id = (long) Objects.hash(name, email);
         this.name = name;
         this.email = email;
+        this.lastLogin = ZonedDateTime.now();
     }
 }
