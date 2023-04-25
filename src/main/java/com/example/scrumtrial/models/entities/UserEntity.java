@@ -1,6 +1,7 @@
-package com.example.scrumtrial.entities.models.Entities;
+package com.example.scrumtrial.models.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +12,8 @@ import java.util.Optional;
 
 @Document("users")
 @Getter
+@Setter
+@NoArgsConstructor
 public class UserEntity {
     @Id
     Long id;

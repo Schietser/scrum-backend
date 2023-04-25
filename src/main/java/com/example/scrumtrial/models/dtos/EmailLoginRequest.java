@@ -1,4 +1,4 @@
-package com.example.scrumtrial.entities.models.dtos;
+package com.example.scrumtrial.models.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

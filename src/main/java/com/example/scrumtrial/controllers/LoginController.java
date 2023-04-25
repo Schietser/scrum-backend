@@ -1,6 +1,6 @@
 package com.example.scrumtrial.controllers;
 
-import com.example.scrumtrial.entities.models.dtos.EmailLoginRequest;
+import com.example.scrumtrial.models.dtos.EmailLoginRequest;
 import com.twilio.Twilio;
 import com.twilio.rest.verify.v2.Service;
 import com.twilio.rest.verify.v2.service.Verification;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/login")
+@RestController("login/")
 public class LoginController {
     private String sid;
     private String token;
@@ -22,7 +22,7 @@ public class LoginController {
         Twilio.init(sid, token);
     }
 
-    @PostMapping("/usr")
+    @PostMapping("login/usr")
     public ResponseEntity<Verification> loginAttempt(@RequestBody EmailLoginRequest req){
         try {
             return ResponseEntity.ok().body(Verification.creator(

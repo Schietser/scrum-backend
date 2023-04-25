@@ -1,9 +1,9 @@
 package com.example.scrumtrial.controllers;
 
-import com.example.scrumtrial.entities.models.Entities.MessageEntity;
-import com.example.scrumtrial.entities.models.Entities.UserEntity;
-import com.example.scrumtrial.entities.repositories.MessageRepository;
-import com.example.scrumtrial.entities.repositories.UserRepository;
+import com.example.scrumtrial.models.entities.MessageEntity;
+import com.example.scrumtrial.models.entities.UserEntity;
+import com.example.scrumtrial.models.repositories.MessageRepository;
+import com.example.scrumtrial.models.repositories.UserRepository;
 import com.github.javafaker.Faker;
 import org.springframework.web.bind.annotation.*;
 
