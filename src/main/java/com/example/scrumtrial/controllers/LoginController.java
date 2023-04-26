@@ -22,9 +22,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.Optional;
 
-@RestController(value = "/login")
+@RestController
 public class LoginController {
-    private Service ssid;
+    private final Service ssid;
     private final UserService uService;
     private final InMemoryUserDetailsManager udm;
 

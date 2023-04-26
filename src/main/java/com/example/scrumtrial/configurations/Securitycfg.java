@@ -26,17 +26,8 @@ public class Securitycfg {
     // TODO: fix security filters
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.
-                authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .anyRequest().authenticated()
-                .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .permitAll()
-                .and()
-                    .logout()
-                    .permitAll();
+        http.cors().disable().csrf().disable().authorizeRequests((auth) -> auth
+                .antMatchers("registration/*").permitAll());
         return http.build();
     }
 
