@@ -1,5 +1,10 @@
 package com.example.scrumtrial.controllers;
 
+import com.example.scrumtrial.Services.MessageService;
+import com.example.scrumtrial.Services.UserService;
+import com.example.scrumtrial.models.dtos.MessageResponse;
+import com.example.scrumtrial.models.dtos.MsgByEmailRequest;
+import com.example.scrumtrial.models.dtos.MsgBySmsRequest;
 import com.example.scrumtrial.models.entities.MessageEntity;
 import com.example.scrumtrial.models.entities.UserEntity;
 import com.example.scrumtrial.models.repositories.MessageRepository;
@@ -12,18 +17,30 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-public class Controller {
-    private final UserRepository ur;
-    private final MessageRepository mr;
+@RequestMapping("messages/")
+public class messageController {
     private  final Random r = new Random();
+    private final MessageService ms;
+    private final UserService us;
     private final Faker f;
 
-    public Controller(UserRepository ur, MessageRepository mr){
-        this.mr = mr;
-        this.ur = ur;
+    public messageController(UserService us, MessageService ms){
+        this.ms = ms;
+        this.us = us;
         this.f = new Faker();
     }
 
+    @GetMapping("/usr")
+    public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgByEmailRequest req){
+        return ms.getAllSentBy(req);
+    }
+
+    @GetMapping("/usr")
+    public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgBySmsRequest req){
+        return ms.getAllSentBy(req);
+    }
+
+    /*
     @GetMapping("/")
     public String user(@CookieValue("loginCred") Integer hash){
         UserEntity tue = new UserEntity(f.name().username(), f.name().nameWithMiddle());
@@ -42,4 +59,5 @@ public class Controller {
         mr.save(new MessageEntity(fu, toUsers, f.lorem().sentence()));
         return "sucess";
     }
+    */
 }
