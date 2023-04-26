@@ -23,15 +23,20 @@ public class Securitycfg {
         return new InMemoryUserDetailsManager(usr);
     }
 
+    // TODO: fix security filters
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic()
+        http.
+                authorizeRequests()
+                    .antMatchers("/").permitAll()
+                    .anyRequest().authenticated()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/", "/usr")
-                .hasRole("ADMIN")
-                .anyRequest()
-                .authenticated();
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                .and()
+                    .logout()
+                    .permitAll();
         return http.build();
     }
 
