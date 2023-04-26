@@ -9,4 +9,5 @@ public class CreateUserWithEmailReq {
     @Email
     private String email;
     private String name;
+    private String code;
 }
