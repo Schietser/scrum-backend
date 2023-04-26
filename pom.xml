@@ -6,16 +6,22 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
+
     <groupId>com.example</groupId>
     <artifactId>scrum-trial</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>scrum-trial</name>
     <description>scrum-trial</description>
+
     <properties>
+        <!-- REQUIRES JDK VERSION 17+ TO COMPILE -->
         <java.version>17</java.version>
+        <!-- REQUIRES LOCAL MONGODB RUNNING ON DEFAULT PORT -->
+        <!-- REQUIRES LOCAL REDIS RUNNING ON DEFAULT PORT -->
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
