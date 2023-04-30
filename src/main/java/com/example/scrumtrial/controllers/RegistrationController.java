@@ -18,12 +18,25 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
+// TODO: CHECK FOR UNIQUENESS OF ACC CREATION IDENTIFIER
 @RestController
 @RequestMapping("/registration")
 public class RegistrationController {
     private Service ssid;
     private final UserService uService;
     private final InMemoryUserDetailsManager udm;
+
+    private enum vStatus{
+        PENDING("pending"),
+        APPROVED("approved"),
+        CANCELLED("canceled");
+
+        private String val;
+
+        vStatus(String str){
+            this.val = str;
+        }
+    }
 
     public RegistrationController(@Value("${TWILIO_ACCOUNT_SID}") String sid, @Value("${TWILIO_AUTH_TOKEN}") String token, UserService uService, InMemoryUserDetailsManager iudm){
         this.uService = uService;
@@ -32,68 +45,67 @@ public class RegistrationController {
         Twilio.init(sid, token);
     }
 
+    private void sendVerificationCode(String adress, String channel) throws Exception{
+        Verification
+                .creator(ssid.getSid(), adress, channel)
+                .createAsync().get();
+    }
+
+    private VerificationCheck checkVerificationCode(String identifier, String code) throws Exception{
+        return VerificationCheck.creator(
+                ssid.getSid())
+                .setTo(identifier)
+                .setCode(code)
+                .create();
+    }
+
     @PostMapping("/usr/getCode/email")
-    public ResponseEntity<?> createUserWithEmail(@RequestBody CreateUserWithEmailReq req){
-        // TODO: FIX
-        Verification verification;
+    public ResponseEntity<LoginReply> createUserWithEmail(@RequestBody CreateUserWithEmailReq req){
         try {
-            verification = Verification.creator(
-                    ssid.getSid(),
-                    req.getEmail(),
-                    "email"
-            ).create();
+            sendVerificationCode(req.getEmail(), "email");
+            return ResponseEntity.ok().body(new LoginReply(true));
         } catch (Exception e){
-            // TODO: FULL ERROR LOGGING
+            /* TODO: FULL ERROR LOGGING */
+            /* and reply error-logic */
             System.out.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of(e.getMessage())));
         }
-        return ResponseEntity.badRequest().body(new LoginReply().error(Optional.of("Failed to send authentication")));
     }
 
     @GetMapping("/usr/checkCode")
-    public ResponseEntity<?> checkUserCode(@RequestBody CreateUserWithEmailReq req){
+    public ResponseEntity<LoginReply> createUser(@RequestBody CreateUserWithEmailReq req){
         VerificationCheck vc;
         try {
-            vc = VerificationCheck.creator(
-                    ssid.getSid())
-                    .setTo(req.getEmail())
-                    .setCode(req.getCode())
-                    .create();
+            vc = checkVerificationCode(req.getEmail(), req.getCode());
         } catch (Exception e){
-            return ResponseEntity.badRequest().build();
+            /* TODO: FULL ERROR LOGGING */
+            /* and reply error-logic */
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of(e.getMessage())));
         }
-        String sT = String.valueOf(Objects.hash(req.getEmail(), ZonedDateTime.now()));
-        udm.createUser(User
-                .withUsername(req.getEmail())
-                .password(sT).build());
-        uService.saveUser(req);
-        return ResponseEntity.ok(new LoginReply().success(true).sessionToken(Optional.of(sT)));
+        if(vc.getValid()) {
+            String sT = String.valueOf(Objects.hash(req.getEmail(), ZonedDateTime.now(), vc.getChannel()));
+            udm.createUser(User
+                    .withUsername(req.getEmail())
+                    .password(sT).build());
+            uService.saveUser(req);
+            return ResponseEntity.ok(new LoginReply(true).sessionToken(Optional.of(sT)));
+        }
+        return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("Failed to authenticate")));
     }
 
     @PostMapping("/usr/getCode/sms")
-    public ResponseEntity<?> createUserWithSms(@RequestBody CreateUserWithSmsReq req){
-        Verification verification;
+    public ResponseEntity<LoginReply> createUserWithSms(@RequestBody CreateUserWithSmsReq req){
         try {
-            verification = Verification.creator(
-                    ssid.getSid(),
-                    req.getSms(),
-                    "sms"
-            ).createAsync().get();
+            sendVerificationCode(req.getSms(), "sms");
+            return ResponseEntity.ok(new LoginReply(true));
         } catch (Exception e){
             // TODO: FULL ERROR LOGGING
             System.out.println(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of(e.getMessage())));
         }
-        if(verification.getValid()){
-            String sT = String.valueOf(Objects.hash(req.getSms(), ZonedDateTime.now()));
-            udm.createUser(User
-                    .withUsername(req.getSms())
-                    .password(sT).build());
-            uService.saveUser(req);
-            return ResponseEntity.ok(new LoginReply().success(true).sessionToken(Optional.of(sT)));
-        }
-        return ResponseEntity.badRequest().body(new LoginReply().error(Optional.of("Failed to authenticate")));
     }
 }

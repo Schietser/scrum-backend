@@ -39,7 +39,7 @@ public class LoginController {
         if(ChronoUnit.MINUTES.between(ue.getLastLogin(), ZonedDateTime.now()) < 1){
             return Optional.of(ResponseEntity
                     .badRequest()
-                    .body(new LoginReply().error(Optional.of("User tried to log in too recently"))));
+                    .body(new LoginReply(false).error(Optional.of("User tried to log in too recently"))));
         }
         ue.setLastLogin(ZonedDateTime.now());
         return Optional.empty();
@@ -59,7 +59,7 @@ public class LoginController {
             }
             updateLastLogin(ue);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new LoginReply().error(Optional.of("User with email:" +  req.getEmail() + " does not exist")));
+            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("User with email:" +  req.getEmail() + " does not exist")));
         }
         Verification verification;
         try {
@@ -79,9 +79,9 @@ public class LoginController {
             udm.createUser(User
                     .withUsername(req.getEmail())
                     .password(sT).build());
-            return ResponseEntity.ok(new LoginReply().success(true).sessionToken(Optional.of(sT)));
+            return ResponseEntity.ok(new LoginReply(true).sessionToken(Optional.of(sT)));
         }
-        return ResponseEntity.badRequest().body(new LoginReply().error(Optional.of("Failed to authenticate")));
+        return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("Failed to authenticate")));
     }
 
     @PostMapping("login/usr/phone")
@@ -94,7 +94,7 @@ public class LoginController {
             }
             updateLastLogin(ue);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new LoginReply().error(Optional.of("User with number:" +  req.getNumber() + " does not exist")));
+            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("User with number:" +  req.getNumber() + " does not exist")));
         }
         Verification verification;
         try {
@@ -114,8 +114,8 @@ public class LoginController {
             udm.createUser(User
                     .withUsername(req.getNumber())
                     .password(sT).build());
-            return ResponseEntity.ok(new LoginReply().success(true).sessionToken(Optional.of(sT)));
+            return ResponseEntity.ok(new LoginReply(true).sessionToken(Optional.of(sT)));
         }
-        return ResponseEntity.badRequest().body(new LoginReply().error(Optional.of("Failed to authenticate")));
+        return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("Failed to authenticate")));
     }
 }
