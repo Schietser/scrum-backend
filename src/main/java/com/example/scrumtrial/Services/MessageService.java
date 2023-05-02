@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
@@ -25,23 +26,21 @@ public class MessageService {
 
     public List<MessageResponse> getAllSentBy(MsgByEmailRequest req) {
         Optional<UserEntity> ue = ur.findUserEntityByEmail(req.getEmail());
-        if(ue.isEmpty()){return List.of();}
-        mr.findAllByFrom(ue.get());
-        return List.of();
+        return ue.map(user -> mr.findAllByFrom(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
     }
 
     public List<MessageResponse> getAllSentBy(MsgBySmsRequest req) {
-        System.err.println("getAllSentBy (sms) is not yet implemented");
-        return List.of();
+        Optional<UserEntity> ue = ur.findUserEntityBySms(req.getSms());
+        return ue.map(user -> mr.findAllByFrom(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
     }
 
     public List<MessageResponse> getAllReceivedBy(MsgToSmsRequest req){
-        System.err.println("getAllSentBy (sms) is not yet implemented");
-        return List.of();
+        Optional<UserEntity> ue = ur.findUserEntityBySms(req.getSms());
+        return ue.map(user -> mr.findAllByToContains(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
     }
 
-    public List<MessageResponse> getAllReceivedBy(MsgToEmailRequest  req){
-        System.err.println("getAllSentBy (sms) is not yet implemented");
-        return List.of();
+    public List<MessageResponse> getAllReceivedBy(MsgToEmailRequest req){
+        Optional<UserEntity> ue = ur.findUserEntityBySms(req.getEmail());
+        return ue.map(user -> mr.findAllByToContains(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
     }
 }

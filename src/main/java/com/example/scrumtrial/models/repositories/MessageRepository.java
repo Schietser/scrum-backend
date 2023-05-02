@@ -7,5 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface MessageRepository extends MongoRepository<MessageEntity, Long> {
-    public List<MessageEntity> findAllByFrom(UserEntity from);
+    List<MessageEntity> findAllByFrom(UserEntity from);
+    List<MessageEntity> findAllByToContains(UserEntity to);
 }
