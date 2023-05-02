@@ -1,6 +1,6 @@
 package com.example.scrumtrial.controllers;
 
-import com.example.scrumtrial.Services.UserService;
+import com.example.scrumtrial.Flow.Services.UserService;
 import com.example.scrumtrial.models.dtos.CheckNewUserEmail;
 import com.example.scrumtrial.models.dtos.CreateUserWithEmailReq;
 import com.example.scrumtrial.models.dtos.CreateUserWithSmsReq;

@@ -1,11 +1,10 @@
-package com.example.scrumtrial.Services;
+package com.example.scrumtrial.Flow.Services;
 
 import com.example.scrumtrial.models.dtos.CheckNewUserEmail;
 import com.example.scrumtrial.models.dtos.CreateUserWithEmailReq;
 import com.example.scrumtrial.models.dtos.CreateUserWithSmsReq;
 import com.example.scrumtrial.models.entities.UserEntity;
 import com.example.scrumtrial.models.repositories.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;

@@ -1,5 +1,6 @@
-package com.example.scrumtrial.Services;
+package com.example.scrumtrial.Flow.Services;
 
+import com.example.scrumtrial.Flow.Mappers.MsgMapper;
 import com.example.scrumtrial.models.dtos.MessageResponse;
 import com.example.scrumtrial.models.dtos.MsgByEmailRequest;
 import com.example.scrumtrial.models.dtos.MsgBySmsRequest;
