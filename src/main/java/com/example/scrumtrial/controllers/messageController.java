@@ -2,9 +2,7 @@ package com.example.scrumtrial.controllers;
 
 import com.example.scrumtrial.Services.MessageService;
 import com.example.scrumtrial.Services.UserService;
-import com.example.scrumtrial.models.dtos.MessageResponse;
-import com.example.scrumtrial.models.dtos.MsgByEmailRequest;
-import com.example.scrumtrial.models.dtos.MsgBySmsRequest;
+import com.example.scrumtrial.models.dtos.*;
 import com.github.javafaker.Faker;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +32,13 @@ public class messageController {
     public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgBySmsRequest req){
         return ms.getAllSentBy(req);
     }
+
+
+    @GetMapping("/tousr/email")
+    public List<MessageResponse> getMessagesReceivedByUsr(@RequestBody MsgToEmailRequest req){ return ms.getAllReceivedBy(req);}
+
+    @GetMapping("/tousr/sms")
+    public List<MessageResponse> getMessagesReceivedByUsr(@RequestBody MsgToSmsRequest req){ return ms.getAllReceivedBy(req);}
 
     /*
     @GetMapping("/")
