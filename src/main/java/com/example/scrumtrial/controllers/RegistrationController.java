@@ -58,7 +58,7 @@ public class RegistrationController {
                 .setCode(code)
                 .create();
     }
-
+    
     @PostMapping("/usr/getCode/email")
     public ResponseEntity<LoginReply> createUserWithEmail(@RequestBody CreateUserWithEmailReq req){
         try {
