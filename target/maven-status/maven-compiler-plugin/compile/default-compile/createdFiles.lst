@@ -15,8 +15,10 @@ com/example/scrumtrial/controllers/RegistrationController.class
 com/example/scrumtrial/Services/UserService.class
 com/example/scrumtrial/configurations/Securitycfg.class
 com/example/scrumtrial/models/repositories/MessageRepository.class
+com/example/scrumtrial/Services/MsgMapper.class
 com/example/scrumtrial/Services/RedisSessionMapper.class
 com/example/scrumtrial/controllers/RegistrationController$vStatus.class
+com/example/scrumtrial/models/dtos/CheckNewUserEmail.class
 com/example/scrumtrial/ScrumTrialApplication.class
 com/example/scrumtrial/Services/MessageService.class
 com/example/scrumtrial/models/entities/UserEntity.class

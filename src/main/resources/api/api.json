@@ -143,7 +143,7 @@
                         "in": "query",
                         "required": true,
                         "schema": {
-                            "$ref": "#/components/schemas/CreateUserWithEmailReq"
+                            "$ref": "#/components/schemas/CheckNewUserEmail"
                         }
                     }
                 ],
@@ -154,6 +154,72 @@
                             "*/*": {
                                 "schema": {
                                     "$ref": "#/components/schemas/LoginReply"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/tousr/sms": {
+            "get": {
+                "tags": [
+                    "message-controller"
+                ],
+                "operationId": "getMessagesReceivedByUsr",
+                "parameters": [
+                    {
+                        "name": "req",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/MsgToSmsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MessageResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/messages/tousr/email": {
+            "get": {
+                "tags": [
+                    "message-controller"
+                ],
+                "operationId": "getMessagesReceivedByUsr_1",
+                "parameters": [
+                    {
+                        "name": "req",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/MsgToEmailRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MessageResponse"
+                                    }
                                 }
                             }
                         }
@@ -252,9 +318,6 @@
                     },
                     "name": {
                         "type": "string"
-                    },
-                    "code": {
-                        "type": "string"
                     }
                 }
             },
@@ -275,13 +338,19 @@
                     }
                 }
             },
-            "MsgBySmsRequest": {
+            "CheckNewUserEmail": {
                 "type": "object",
                 "properties": {
-                    "sms": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "code": {
                         "type": "string"
                     }
                 }
+            },
+            "MsgToSmsRequest": {
+                "type": "object"
             },
             "MessageResponse": {
                 "type": "object",
@@ -296,6 +365,17 @@
                         }
                     },
                     "body": {
+                        "type": "string"
+                    }
+                }
+            },
+            "MsgToEmailRequest": {
+                "type": "object"
+            },
+            "MsgBySmsRequest": {
+                "type": "object",
+                "properties": {
+                    "sms": {
                         "type": "string"
                     }
                 }

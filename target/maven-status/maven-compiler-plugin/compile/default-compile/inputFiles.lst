@@ -4,6 +4,7 @@
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/models/dtos/PhoneLoginRequest.java
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/Services/UserService.java
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/controllers/RegistrationController.java
+/home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/Services/MsgMapper.java
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/configurations/Securitycfg.java
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/models/entities/MessageEntity.java
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/models/dtos/CreateUserWithSmsReq.java
@@ -19,4 +20,5 @@
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/ScrumTrialApplication.java
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/models/dtos/LoginReply.java
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/Services/MessageService.java
+/home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/models/dtos/CheckNewUserEmail.java
 /home/mano/intec/scrum-trial/src/main/java/com/example/scrumtrial/models/repositories/MessageRepository.java
