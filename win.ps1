@@ -20,4 +20,5 @@ scoop bucket add versions
 
 scoop install redis redis-tui mongodb mongosh mongodb-compass
 
+
 Set-Env -Machine -Name ":skull:" -Value "💀"
