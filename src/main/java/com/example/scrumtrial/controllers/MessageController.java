@@ -3,7 +3,6 @@ package com.example.scrumtrial.controllers;
 import com.example.scrumtrial.Flow.Services.MessageService;
 import com.example.scrumtrial.Flow.Services.UserService;
 import com.example.scrumtrial.models.dtos.*;
-import com.github.javafaker.Faker;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,12 +14,10 @@ public class MessageController {
     private  final Random r = new Random();
     private final MessageService ms;
     private final UserService us;
-    private final Faker f;
 
     public MessageController(UserService us, MessageService ms){
         this.ms = ms;
         this.us = us;
-        this.f = new Faker();
     }
 
     @GetMapping("/fromusr/email")
