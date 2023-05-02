@@ -11,8 +11,8 @@ import com.twilio.rest.verify.v2.Service;
 import com.twilio.rest.verify.v2.service.Verification;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+//import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,12 +26,12 @@ import java.util.Optional;
 public class LoginController {
     private final Service ssid;
     private final UserService uService;
-    private final InMemoryUserDetailsManager udm;
+//    private final InMemoryUserDetailsManager udm;
 
-    private LoginController(@Value("${TWILIO_ACCOUNT_SID}") String sid, @Value("${TWILIO_AUTH_TOKEN}") String token, UserService uService, InMemoryUserDetailsManager imudm){
+    private LoginController(@Value("${TWILIO_ACCOUNT_SID}") String sid, @Value("${TWILIO_AUTH_TOKEN}") String token, UserService uService/* InMemoryUserDetailsManager imudm*/){
         this.ssid = Service.creator("verificationService").create();
         this.uService = uService;
-        this.udm = imudm;
+//        this.udm = imudm;
         Twilio.init(sid, token);
     }
 
@@ -76,9 +76,9 @@ public class LoginController {
         }
         if(verification.getValid()){
             String sT = String.valueOf(Objects.hash(req.getEmail(), ZonedDateTime.now()));
-            udm.createUser(User
-                    .withUsername(req.getEmail())
-                    .password(sT).build());
+//            udm.createUser(User
+//                    .withUsername(req.getEmail())
+//                    .password(sT).build());
             return ResponseEntity.ok(new LoginReply(true).sessionToken(Optional.of(sT)));
         }
         return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("Failed to authenticate")));
@@ -111,9 +111,9 @@ public class LoginController {
         }
         if(verification.getValid()){
             String sT = String.valueOf(Objects.hash(req.getNumber(), ZonedDateTime.now()));
-            udm.createUser(User
-                    .withUsername(req.getNumber())
-                    .password(sT).build());
+//            udm.createUser(User
+//                    .withUsername(req.getNumber())
+//                    .password(sT).build());
             return ResponseEntity.ok(new LoginReply(true).sessionToken(Optional.of(sT)));
         }
         return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("Failed to authenticate")));

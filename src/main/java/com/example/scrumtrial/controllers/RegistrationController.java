@@ -10,8 +10,8 @@ import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+//import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class RegistrationController {
     private Service ssid;
     private final UserService uService;
-    private final InMemoryUserDetailsManager udm;
+//    private final InMemoryUserDetailsManager udm;
 
     private enum vStatus{
         PENDING("pending"),
@@ -38,9 +38,9 @@ public class RegistrationController {
         }
     }
 
-    public RegistrationController(@Value("${TWILIO_ACCOUNT_SID}") String sid, @Value("${TWILIO_AUTH_TOKEN}") String token, UserService uService, InMemoryUserDetailsManager iudm){
+    public RegistrationController(@Value("${TWILIO_ACCOUNT_SID}") String sid, @Value("${TWILIO_AUTH_TOKEN}") String token, UserService uService/*, InMemoryUserDetailsManager iudm*/){
         this.uService = uService;
-        this.udm = iudm;
+//        this.udm = iudm;
         this.ssid = Service.creator("verificationService").create();
         Twilio.init(sid, token);
     }
@@ -87,9 +87,9 @@ public class RegistrationController {
         }
         if(vc.getValid()) {
             String sT = String.valueOf(Objects.hash(req.getEmail(), ZonedDateTime.now(), vc.getChannel()));
-            udm.createUser(User
-                    .withUsername(req.getEmail())
-                    .password(sT).build());
+//            udm.createUser(User
+//                    .withUsername(req.getEmail())
+//                    .password(sT).build());
             uService.saveUser(req);
             return ResponseEntity.ok(new LoginReply(true).sessionToken(Optional.of(sT)));
         }

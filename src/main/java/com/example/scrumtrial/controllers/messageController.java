@@ -25,12 +25,12 @@ public class messageController {
         this.f = new Faker();
     }
 
-    @GetMapping("/usr")
+    @GetMapping("/fromusr/email")
     public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgByEmailRequest req){
         return ms.getAllSentBy(req);
     }
 
-    @GetMapping("/usr")
+    @GetMapping("/fromusr/sms")
     public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgBySmsRequest req){
         return ms.getAllSentBy(req);
     }
