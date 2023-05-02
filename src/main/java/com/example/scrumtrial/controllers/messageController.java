@@ -5,14 +5,9 @@ import com.example.scrumtrial.Services.UserService;
 import com.example.scrumtrial.models.dtos.MessageResponse;
 import com.example.scrumtrial.models.dtos.MsgByEmailRequest;
 import com.example.scrumtrial.models.dtos.MsgBySmsRequest;
-import com.example.scrumtrial.models.entities.MessageEntity;
-import com.example.scrumtrial.models.entities.UserEntity;
-import com.example.scrumtrial.models.repositories.MessageRepository;
-import com.example.scrumtrial.models.repositories.UserRepository;
 import com.github.javafaker.Faker;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -30,12 +25,12 @@ public class messageController {
         this.f = new Faker();
     }
 
-    @GetMapping("/usr")
+    @GetMapping("/fromusr/email")
     public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgByEmailRequest req){
         return ms.getAllSentBy(req);
     }
 
-    @GetMapping("/usr")
+    @GetMapping("/fromusr/sms")
     public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgBySmsRequest req){
         return ms.getAllSentBy(req);
     }
