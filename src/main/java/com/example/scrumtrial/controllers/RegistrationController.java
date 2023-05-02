@@ -91,13 +91,13 @@ public class RegistrationController {
     }
 
     @PostMapping("/usr/getCode/sms")
-    public ResponseEntity<LoginReply> sendVerificationCode(@RequestBody CreateUserWithSmsReq req){
+    public LoginReply sendVerificationCode(@RequestBody CreateUserWithSmsReq req){
         try {
             sendVerificationCode(req.getSms(), "sms");
-            return ResponseEntity.ok(new LoginReply(true));
+            return new LoginReply(true);
         } catch (Exception e){
             log.error(e.getMessage(), e);
-            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of(e.getMessage())));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
     }
 
