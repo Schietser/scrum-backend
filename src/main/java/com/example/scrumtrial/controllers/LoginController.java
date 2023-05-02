@@ -9,12 +9,14 @@ import com.twilio.Twilio;
 import com.twilio.rest.verify.v2.Service;
 import com.twilio.rest.verify.v2.service.Verification;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.userdetails.User;
 //import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -36,9 +38,7 @@ public class LoginController {
 
     public Optional<ResponseEntity<LoginReply>> checkUserLoginTime(UserEntity ue){
         if(ChronoUnit.MINUTES.between(ue.getLastLogin(), ZonedDateTime.now()) < 1){
-            return Optional.of(ResponseEntity
-                    .badRequest()
-                    .body(new LoginReply(false).error(Optional.of("User tried to log in too recently"))));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User tried to log in too recently");
         }
         ue.setLastLogin(ZonedDateTime.now());
         return Optional.empty();
@@ -58,7 +58,7 @@ public class LoginController {
             }
             updateLastLogin(ue);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("User with email:" +  req.getEmail() + " does not exist")));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with email:" +  req.getEmail() + " does not exist");
         }
         Verification verification;
         try {
@@ -78,9 +78,11 @@ public class LoginController {
 //            udm.createUser(User
 //                    .withUsername(req.getEmail())
 //                    .password(sT).build());
-            return ResponseEntity.ok(new LoginReply(true).sessionToken(Optional.of(sT)));
+            LoginReply l = new LoginReply(true);
+            l.setSessionToken(sT);
+            return ResponseEntity.ok(l);
         }
-        return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("Failed to authenticate")));
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to authenticate");
     }
 
     @PostMapping("login/usr/phone")
@@ -93,7 +95,7 @@ public class LoginController {
             }
             updateLastLogin(ue);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("User with number:" +  req.getNumber() + " does not exist")));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with number:" +  req.getNumber() + " does not exist");
         }
         Verification verification;
         try {
@@ -113,8 +115,10 @@ public class LoginController {
 //            udm.createUser(User
 //                    .withUsername(req.getNumber())
 //                    .password(sT).build());
-            return ResponseEntity.ok(new LoginReply(true).sessionToken(Optional.of(sT)));
+            LoginReply l = new LoginReply(true);
+            l.setSessionToken(sT);
+            return ResponseEntity.ok(l);
         }
-        return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("Failed to authenticate")));
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to authenticate");
     }
 }

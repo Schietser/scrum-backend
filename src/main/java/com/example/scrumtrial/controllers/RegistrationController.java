@@ -9,7 +9,7 @@ import com.twilio.rest.verify.v2.service.VerificationCheck;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 //import org.springframework.security.core.userdetails.User;
 //import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 //import java.time.ZonedDateTime;
 //import java.util.Objects;
-import java.util.Optional;
+//import java.util.Optional;
 import java.util.function.Supplier;
 
 // TODO: CHECK FOR UNIQUENESS OF ACC CREATION IDENTIFIER
@@ -85,7 +85,7 @@ public class RegistrationController {
         }
     }
 
-    @PostMapping("/usr/checkCode/email")
+    @PostMapping(value = "/usr/checkCode/email", produces = MediaType.APPLICATION_JSON_VALUE)
     public LoginReply createUserIfCodeIsValid(@RequestBody CheckNewUserEmail req){
         return validateAndSave(req, req::getEmail, req::getCode);
     }
@@ -101,7 +101,7 @@ public class RegistrationController {
         }
     }
 
-    @PostMapping("/usr/checkCode/sms")
+    @PostMapping(value = "/usr/checkCode/sms", produces = MediaType.APPLICATION_JSON_VALUE)
     public LoginReply createUserIfCodeIsValid(@RequestBody CheckNewUserSms req){
         return validateAndSave(req, req::getSms, req::getCode);
     }
