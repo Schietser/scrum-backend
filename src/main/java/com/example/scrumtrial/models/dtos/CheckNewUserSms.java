@@ -3,8 +3,8 @@ package com.example.scrumtrial.models.dtos;
 import lombok.Data;
 
 @Data
-public class CheckNewUserEmail {
-    private String email;
+public class CheckNewUserSms {
     private String name;
+    private String sms;
     private String code;
 }

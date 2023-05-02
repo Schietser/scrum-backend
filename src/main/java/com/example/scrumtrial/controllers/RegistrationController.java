@@ -1,10 +1,7 @@
 package com.example.scrumtrial.controllers;
 
 import com.example.scrumtrial.Flow.Services.UserService;
-import com.example.scrumtrial.models.dtos.CheckNewUserEmail;
-import com.example.scrumtrial.models.dtos.CreateUserWithEmailReq;
-import com.example.scrumtrial.models.dtos.CreateUserWithSmsReq;
-import com.example.scrumtrial.models.dtos.LoginReply;
+import com.example.scrumtrial.models.dtos.*;
 import com.twilio.Twilio;
 import com.twilio.rest.verify.v2.Service;
 import com.twilio.rest.verify.v2.service.Verification;
@@ -15,29 +12,20 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.ZonedDateTime;
-import java.util.Objects;
+//import java.time.ZonedDateTime;
+//import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 // TODO: CHECK FOR UNIQUENESS OF ACC CREATION IDENTIFIER
 @RestController
 @RequestMapping("/registration")
 public class RegistrationController {
-    private Service ssid;
+    private final Service ssid;
     private final UserService uService;
+    private VerificationCheck vc;
+
 //    private final InMemoryUserDetailsManager udm;
-
-    private enum vStatus{
-        PENDING("pending"),
-        APPROVED("approved"),
-        CANCELLED("canceled");
-
-        private String val;
-
-        vStatus(String str){
-            this.val = str;
-        }
-    }
 
     public RegistrationController(@Value("${TWILIO_ACCOUNT_SID}") String sid, @Value("${TWILIO_AUTH_TOKEN}") String token, UserService uService/*, InMemoryUserDetailsManager iudm*/){
         this.uService = uService;
@@ -59,7 +47,30 @@ public class RegistrationController {
                 .setCode(code)
                 .create();
     }
-    
+
+    public ResponseEntity<LoginReply> an_even_more_suspicious_fun(Object req, Supplier<String> identifier_supp, Supplier<String> code_supp){
+        try {
+            vc = checkVerificationCode(identifier_supp.get(), code_supp.get());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of(e.getMessage())));
+        }
+        if(vc.getValid()) {
+            if(req instanceof CheckNewUserEmail){
+                uService.saveUser((CheckNewUserEmail) req);
+            } else if (req instanceof CheckNewUserSms) {
+                uService.saveUser((CheckNewUserSms) req);
+            } else{
+                System.err.println("there is an unimplemented type ඞ among us ඞ");
+                System.err.println("YOU FORGOR \uD83D\uDC80 TO IMPL TYPE " + req.getClass().getSimpleName());
+                return ResponseEntity.internalServerError().body(new LoginReply(false).error(Optional.of("I forgor \uD83D\uDC80")));
+            }
+            return ResponseEntity.ok(new LoginReply(true));
+        }
+        return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("Failed to authenticate")));
+    }
+
     @PostMapping("/usr/getCode/email")
     public ResponseEntity<LoginReply> createUserWithEmail(@RequestBody CreateUserWithEmailReq req){
         try {
@@ -74,27 +85,9 @@ public class RegistrationController {
         }
     }
 
-    @GetMapping("/usr/checkCode")
+    @PostMapping("/usr/checkCode/email")
     public ResponseEntity<LoginReply> createUser(@RequestBody CheckNewUserEmail req){
-        VerificationCheck vc;
-        try {
-            vc = checkVerificationCode(req.getEmail(), req.getCode());
-        } catch (Exception e){
-            /* TODO: FULL ERROR LOGGING */
-            /* and reply error-logic */
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of(e.getMessage())));
-        }
-        if(vc.getValid()) {
-            String sT = String.valueOf(Objects.hash(req.getEmail(), ZonedDateTime.now(), vc.getChannel()));
-//            udm.createUser(User
-//                    .withUsername(req.getEmail())
-//                    .password(sT).build());
-            uService.saveUser(req);
-            return ResponseEntity.ok(new LoginReply(true).sessionToken(Optional.of(sT)));
-        }
-        return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of("Failed to authenticate")));
+        return an_even_more_suspicious_fun(req, req::getEmail, req::getCode);
     }
 
     @PostMapping("/usr/getCode/sms")
@@ -108,5 +101,10 @@ public class RegistrationController {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(new LoginReply(false).error(Optional.of(e.getMessage())));
         }
+    }
+
+    @PostMapping("/usr/checkCode/sms")
+    public ResponseEntity<LoginReply> createUser(@RequestBody CheckNewUserSms req){
+        return an_even_more_suspicious_fun(req, req::getSms, req::getCode);
     }
 }

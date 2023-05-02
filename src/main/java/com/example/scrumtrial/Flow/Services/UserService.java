@@ -1,6 +1,7 @@
 package com.example.scrumtrial.Flow.Services;
 
 import com.example.scrumtrial.models.dtos.CheckNewUserEmail;
+import com.example.scrumtrial.models.dtos.CheckNewUserSms;
 import com.example.scrumtrial.models.dtos.CreateUserWithEmailReq;
 import com.example.scrumtrial.models.dtos.CreateUserWithSmsReq;
 import com.example.scrumtrial.models.entities.UserEntity;
@@ -42,6 +43,16 @@ public class UserService {
     }
 
     public UserEntity saveUser(CheckNewUserEmail req){
-        return null;
+        UserEntity e = new UserEntity();
+        e.setName(req.getName());
+        e.setEmail(req.getEmail());
+        return uRep.save(e);
+    }
+
+    public UserEntity saveUser(CheckNewUserSms req) {
+        UserEntity e = new UserEntity();
+        e.setName(req.getName());
+        e.setSms(req.getSms());
+        return uRep.save(e);
     }
 }
