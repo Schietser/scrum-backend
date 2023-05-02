@@ -2,6 +2,7 @@ package com.example.scrumtrial.Flow.Services;
 
 import com.example.scrumtrial.Flow.Mappers.MsgMapper;
 import com.example.scrumtrial.models.dtos.*;
+import com.example.scrumtrial.models.entities.MessageEntity;
 import com.example.scrumtrial.models.entities.UserEntity;
 import com.example.scrumtrial.models.repositories.MessageRepository;
 import com.example.scrumtrial.models.repositories.UserRepository;
@@ -50,8 +51,7 @@ public class MessageService {
                 .map(e -> e.orElse(null))
                 .filter(Objects::nonNull)
         .collect(Collectors.toList());
-
-        if(ue.isEmpty()){return;}
-
+        if(ue.isEmpty() || re.isEmpty()){return;}
+        mr.save(new MessageEntity(ue.get(), re, req.getContent()));
     }
 }

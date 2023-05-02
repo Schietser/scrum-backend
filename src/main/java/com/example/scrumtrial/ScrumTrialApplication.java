@@ -9,9 +9,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRedisHttpSession
 @EnableRedisRepositories
 public class ScrumTrialApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(ScrumTrialApplication.class, args);
     }
-
 }
