@@ -1,6 +1,7 @@
 package com.example.scrumtrial.controllers;
 
 import com.example.scrumtrial.Services.UserService;
+import com.example.scrumtrial.models.dtos.CheckNewUserEmail;
 import com.example.scrumtrial.models.dtos.CreateUserWithEmailReq;
 import com.example.scrumtrial.models.dtos.CreateUserWithSmsReq;
 import com.example.scrumtrial.models.dtos.LoginReply;
@@ -74,7 +75,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/usr/checkCode")
-    public ResponseEntity<LoginReply> createUser(@RequestBody CreateUserWithEmailReq req){
+    public ResponseEntity<LoginReply> createUser(@RequestBody CheckNewUserEmail req){
         VerificationCheck vc;
         try {
             vc = checkVerificationCode(req.getEmail(), req.getCode());

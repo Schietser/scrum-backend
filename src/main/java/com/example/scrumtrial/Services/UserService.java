@@ -1,9 +1,11 @@
 package com.example.scrumtrial.Services;
 
+import com.example.scrumtrial.models.dtos.CheckNewUserEmail;
 import com.example.scrumtrial.models.dtos.CreateUserWithEmailReq;
 import com.example.scrumtrial.models.dtos.CreateUserWithSmsReq;
 import com.example.scrumtrial.models.entities.UserEntity;
 import com.example.scrumtrial.models.repositories.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -38,5 +40,9 @@ public class UserService {
         e.setSms(req.getSms());
         e.setLastLogin(ZonedDateTime.now());
         return uRep.save(e);
+    }
+
+    public UserEntity saveUser(CheckNewUserEmail req){
+        return null;
     }
 }
