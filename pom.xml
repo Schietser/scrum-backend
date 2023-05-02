@@ -16,7 +16,7 @@
     <description>scrum-trial</description>
 
     <properties>
-        <!-- REQUIRES JDK VERSION 17+ TO COMPILE -->
+        <!-- REQUIRES JDK VERSION 11 TO COMPILE -->
         <java.version>11</java.version>
         <!-- REQUIRES LOCAL MONGODB RUNNING ON DEFAULT PORT -->
         <!-- REQUIRES LOCAL REDIS RUNNING ON DEFAULT PORT -->
