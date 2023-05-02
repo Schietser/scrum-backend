@@ -1,19 +1,17 @@
 package com.example.scrumtrial.Flow.Services;
 
 import com.example.scrumtrial.Flow.Mappers.MsgMapper;
-import com.example.scrumtrial.models.dtos.MessageResponse;
-import com.example.scrumtrial.models.dtos.MsgByEmailRequest;
-import com.example.scrumtrial.models.dtos.MsgBySmsRequest;
-import com.example.scrumtrial.models.dtos.MsgToSmsRequest;
-import com.example.scrumtrial.models.dtos.MsgToEmailRequest;
+import com.example.scrumtrial.models.dtos.*;
 import com.example.scrumtrial.models.entities.UserEntity;
 import com.example.scrumtrial.models.repositories.MessageRepository;
 import com.example.scrumtrial.models.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class MessageService {
@@ -43,5 +41,17 @@ public class MessageService {
     public List<MessageResponse> getAllReceivedBy(MsgToEmailRequest req){
         Optional<UserEntity> ue = ur.findUserEntityBySms(req.getEmail());
         return ue.map(user -> mr.findAllByToContains(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
+    }
+
+    public void postMessage(NewMsgEmailToEmailReq req) {
+        Optional<UserEntity> ue = ur.findUserEntityByEmail(req.getSenderEmail());
+        List<UserEntity> re = req.getReceiverEmails().stream()
+                .map(ur::findUserEntityByEmail)
+                .map(e -> e.orElse(null))
+                .filter(Objects::nonNull)
+        .collect(Collectors.toList());
+
+        if(ue.isEmpty()){return;}
+
     }
 }

@@ -13,11 +13,14 @@ import java.util.Random;
 public class MessageController {
     private  final Random r = new Random();
     private final MessageService ms;
-    private final UserService us;
 
     public MessageController(UserService us, MessageService ms){
         this.ms = ms;
-        this.us = us;
+    }
+
+    @PostMapping("/addMsg")
+    public void postNewMessage(@RequestBody NewMsgEmailToEmailReq req){
+        ms.postMessage(req);
     }
 
     @GetMapping("/fromusr/email")
