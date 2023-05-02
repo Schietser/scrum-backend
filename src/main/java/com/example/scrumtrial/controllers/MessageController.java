@@ -23,21 +23,21 @@ public class MessageController {
         ms.postMessage(req);
     }
 
-    @GetMapping("/fromusr/email")
+    @GetMapping("/usr/from/email")
     public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgByEmailRequest req){
         return ms.getAllSentBy(req);
     }
 
-    @GetMapping("/fromusr/sms")
+    @GetMapping("/usr/from/sms")
     public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgBySmsRequest req){
         return ms.getAllSentBy(req);
     }
 
 
-    @GetMapping("/tousr/email")
+    @GetMapping("/usr/to/email")
     public List<MessageResponse> getMessagesReceivedByUsr(@RequestBody MsgToEmailRequest req){ return ms.getAllReceivedBy(req);}
 
-    @GetMapping("/tousr/sms")
+    @GetMapping("/usr/to/sms")
     public List<MessageResponse> getMessagesReceivedByUsr(@RequestBody MsgToSmsRequest req){ return ms.getAllReceivedBy(req);}
 
     /*

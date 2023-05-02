@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import java.time.ZonedDateTime;
-import java.util.Objects;
 
 @Document("users")
 @Getter
@@ -17,7 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class UserEntity {
     @Id
-    Long id;
+    String id;
 
     @Setter
     String name;
@@ -29,7 +28,6 @@ public class UserEntity {
     ZonedDateTime lastLogin;
 
     public UserEntity(String name, String email){
-        this.id = (long) Objects.hash(name, email);
         this.name = name;
         this.email = email;
         this.lastLogin = ZonedDateTime.now();

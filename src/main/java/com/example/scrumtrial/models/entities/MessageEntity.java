@@ -7,7 +7,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
-import java.util.Objects;
 
 @Document("Messages")
 @Getter
@@ -15,7 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 public class MessageEntity {
     @Id
-    Long id;
+    String id;
 
     UserEntity from;
     List<UserEntity> to;
@@ -25,6 +24,5 @@ public class MessageEntity {
         this.from = from;
         this.to = to;
         this.content = c;
-        this.id = (long) Objects.hash(from, to, c);
     }
 }
