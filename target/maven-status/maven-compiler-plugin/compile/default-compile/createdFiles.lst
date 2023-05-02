@@ -13,10 +13,11 @@ com/example/scrumtrial/controllers/LoginController.class
 com/example/scrumtrial/models/dtos/MsgToSmsRequest.class
 com/example/scrumtrial/controllers/RegistrationController.class
 com/example/scrumtrial/configurations/Securitycfg.class
+com/example/scrumtrial/models/dtos/NewMsgEmailToEmailReq.class
 com/example/scrumtrial/models/repositories/MessageRepository.class
 com/example/scrumtrial/Flow/Services/RedisSessionMapper.class
 com/example/scrumtrial/Flow/Mappers/MsgMapper.class
-com/example/scrumtrial/controllers/RegistrationController$vStatus.class
+com/example/scrumtrial/models/dtos/CheckNewUserSms.class
 com/example/scrumtrial/Flow/Services/UserService.class
 com/example/scrumtrial/models/dtos/CheckNewUserEmail.class
 com/example/scrumtrial/ScrumTrialApplication.class
