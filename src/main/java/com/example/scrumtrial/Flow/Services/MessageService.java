@@ -39,7 +39,7 @@ public class MessageService {
     }
 
     public List<MessageResponse> getAllReceivedBy(MsgToEmailRequest req){
-        Optional<UserEntity> ue = ur.findUserEntityByPhone(req.getEmail());
+        Optional<UserEntity> ue = ur.findUserEntityByEmail(req.getEmail());
         return ue.map(user -> mr.findAllByToContains(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
     }
 

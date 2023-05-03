@@ -33,21 +33,35 @@ public class MessageController {
     }
 
     @GetMapping("/usr/from/email")
-    public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgByEmailRequest req){
+    public List<MessageResponse> getMessagesSentByUsrUsingEmail(@RequestParam String email){
+        MsgByEmailRequest req=new MsgByEmailRequest();
+        req.setEmail(email);
         return ms.getAllSentBy(req);
     }
 
     @GetMapping("/usr/from/sms")
-    public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgByPhoneRequest req){
+    public List<MessageResponse> getMessagesSentByUsrUsingSms(@RequestParam String sms){
+        MsgByPhoneRequest req=new MsgByPhoneRequest();
+        req.setPhone(sms);
         return ms.getAllSentBy(req);
     }
 
 
     @GetMapping("/usr/to/email")
-    public List<MessageResponse> getMessagesReceivedByUsr(@RequestBody MsgToEmailRequest req){ return ms.getAllReceivedBy(req);}
+    public List<MessageResponse> getMessagesReceivedByUsrUsingEmail(@RequestParam String email){
+        MsgToEmailRequest req=new MsgToEmailRequest();
+        req.setEmail(email);
+        return ms.getAllReceivedBy(req);
+    }
 
     @GetMapping("/usr/to/sms")
-    public List<MessageResponse> getMessagesReceivedByUsr(@RequestBody MsgToPhoneRequest req){ return ms.getAllReceivedBy(req);}
+    public List<MessageResponse> getMessagesReceivedByUsrUsingSms(@RequestParam String sms){
+        MsgToPhoneRequest req=new MsgToPhoneRequest();
+        req.setPhone(sms);
+        return ms.getAllReceivedBy(req);
+    }
+
+
 
     /*
     @GetMapping("/")
