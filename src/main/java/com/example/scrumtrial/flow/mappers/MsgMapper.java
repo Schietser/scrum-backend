@@ -1,4 +1,4 @@
-package com.example.scrumtrial.Flow.Mappers;
+package com.example.scrumtrial.flow.mappers;
 
 import com.example.scrumtrial.models.dtos.MessageResponse;
 import com.example.scrumtrial.models.entities.MessageEntity;

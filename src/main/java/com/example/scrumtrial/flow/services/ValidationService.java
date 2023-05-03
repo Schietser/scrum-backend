@@ -1,13 +1,12 @@
-package com.example.scrumtrial.Flow.Services;
+package com.example.scrumtrial.flow.services;
 
-import com.example.scrumtrial.Flow.Mappers.ValidationMapper;
-import com.example.scrumtrial.Flow.exceptions.UserNotValidException;
+import com.example.scrumtrial.flow.mappers.ValidationMapper;
+import com.example.scrumtrial.flow.exceptions.UserNotValidException;
 import com.example.scrumtrial.models.dtos.ValidationRequest;
 import com.example.scrumtrial.models.dtos.ValidationResponse;
 import com.example.scrumtrial.models.entities.ValidationEntity;
 import com.example.scrumtrial.models.repositories.ValidationRepository;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 public class ValidationService {
 
     private final ValidationRepository vr;
-
     private final ValidationMapper vm;
 
     public ValidationService(ValidationRepository vr, ValidationMapper vm) {

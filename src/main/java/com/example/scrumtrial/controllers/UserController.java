@@ -1,11 +1,9 @@
 package com.example.scrumtrial.controllers;
 
-import com.example.scrumtrial.Flow.Services.EmailService;
-import com.example.scrumtrial.Flow.Services.PhoneService;
-import com.example.scrumtrial.Flow.Services.UserService;
-import com.example.scrumtrial.Flow.Services.ValidationService;
-import com.example.scrumtrial.Flow.exceptions.UserNotFoundException;
-import com.example.scrumtrial.Flow.exceptions.UserNotValidException;
+import com.example.scrumtrial.flow.services.EmailService;
+import com.example.scrumtrial.flow.services.PhoneService;
+import com.example.scrumtrial.flow.services.UserService;
+import com.example.scrumtrial.flow.services.ValidationService;
 import com.example.scrumtrial.models.dtos.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,15 +35,15 @@ public class UserController {
     public void validateApiWithEmail(@RequestParam String email){
 
         log.info("Validation started");
-        this.es.sendValidationCode(email);
+        this.es.sendValidationCodeEmail(email);
         log.info("Validation ended");
     }
 
     @PutMapping("/validate/phone")
-    public void validateApiWithPhone(@RequestParam String phone){
+    public void validateApiWithPhone(@RequestParam String phoneToValidate){
 
         log.info("Validation started");
-        this.ps.sendValidationCode(phone);
+        this.ps.sendSmsWithValidationCode(phoneToValidate);
         log.info("Validation ended");
     }
 

@@ -1,5 +1,9 @@
-package com.example.scrumtrial.Flow.Services;
+package com.example.scrumtrial.flow.services;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.IncomingPhoneNumber;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +20,10 @@ import java.io.IOException;
 public class EmailService {
 
     private final String key;
+    private String number;
     private final ValidationRepository vRepo;
+    private String sid = "${TWILIO_ACCOUNT_SID}";
+    private String token = "${TWILIO_AUTH_TOKEN}";
 
     public EmailService(@Value("${SENDGRID_API_KEY}") String key,
             final ValidationRepository vRepo) {
@@ -55,7 +62,7 @@ public class EmailService {
         }
     }
 
-    public void sendValidationCode(final String emailToValidate) throws IllegalArgumentException {
+    public void sendValidationCodeEmail(final String emailToValidate) throws IllegalArgumentException {
 
         if (emailToValidate == null || emailToValidate.isBlank()) {
             throw new IllegalArgumentException("emailToValidate cannot be null or blank");
@@ -108,5 +115,6 @@ public class EmailService {
                     ex);
         }
     }
+
 
 }

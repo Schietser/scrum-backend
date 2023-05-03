@@ -1,13 +1,12 @@
-package com.example.scrumtrial.Flow.Services;
+package com.example.scrumtrial.flow.services;
 
-import com.example.scrumtrial.Flow.Mappers.UserMapper;
-import com.example.scrumtrial.Flow.exceptions.UserNotFoundException;
+import com.example.scrumtrial.flow.mappers.UserMapper;
+import com.example.scrumtrial.flow.exceptions.UserNotFoundException;
 import com.example.scrumtrial.models.dtos.*;
 import com.example.scrumtrial.models.entities.UserEntity;
 import com.example.scrumtrial.models.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service

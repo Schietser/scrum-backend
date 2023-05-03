@@ -1,4 +1,4 @@
-package com.example.scrumtrial.Flow.Services;
+package com.example.scrumtrial.flow.services;
 
 /*
  * Copyright 2014-2019 the original author or authors.

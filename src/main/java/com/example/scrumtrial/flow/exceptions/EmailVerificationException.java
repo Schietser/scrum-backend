@@ -1,4 +1,4 @@
-package com.example.scrumtrial.Flow.exceptions;
+package com.example.scrumtrial.flow.exceptions;
 
 public class EmailVerificationException extends com.twilio.exception.ApiException{
     public EmailVerificationException(String message) {

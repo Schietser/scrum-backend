@@ -1,8 +1,8 @@
 package com.example.scrumtrial.controllers;
 
-import com.example.scrumtrial.Flow.Services.EmailService;
-import com.example.scrumtrial.Flow.Services.MessageService;
-import com.example.scrumtrial.Flow.Services.UserService;
+import com.example.scrumtrial.flow.services.EmailService;
+import com.example.scrumtrial.flow.services.MessageService;
+import com.example.scrumtrial.flow.services.UserService;
 import com.example.scrumtrial.models.dtos.*;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.example.scrumtrial.Flow.exceptions;
+package com.example.scrumtrial.flow.exceptions;
 
 public class UserNotValidException extends RuntimeException{
 

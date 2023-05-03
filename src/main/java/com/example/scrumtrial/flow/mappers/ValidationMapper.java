@@ -1,4 +1,4 @@
-package com.example.scrumtrial.Flow.Mappers;
+package com.example.scrumtrial.flow.mappers;
 
 import org.springframework.stereotype.Component;
 

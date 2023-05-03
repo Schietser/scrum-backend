@@ -1,6 +1,6 @@
-package com.example.scrumtrial.Flow.Services;
+package com.example.scrumtrial.flow.services;
 
-import com.example.scrumtrial.Flow.Mappers.MsgMapper;
+import com.example.scrumtrial.flow.mappers.MsgMapper;
 import com.example.scrumtrial.models.dtos.*;
 import com.example.scrumtrial.models.entities.MessageEntity;
 import com.example.scrumtrial.models.entities.UserEntity;
