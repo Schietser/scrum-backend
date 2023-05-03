@@ -10,6 +10,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("messages/")
+@CrossOrigin(origins = "http://localhost:4200")
 public class MessageController {
     private  final Random r = new Random();
     private final MessageService ms;
