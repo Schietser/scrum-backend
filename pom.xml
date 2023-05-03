@@ -72,6 +72,12 @@
             <version>9.0.0-rc.5</version>
         </dependency>
 
+        <dependency>
+        <groupId>com.sendgrid</groupId>
+        <artifactId>sendgrid-java</artifactId>
+        <version>4.0.1</version>
+        </dependency>
+
 <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.github.javafaker/javafaker &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>com.github.javafaker</groupId>-->
