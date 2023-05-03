@@ -20,8 +20,7 @@ public class ValidationRequest {
     @NotBlank
     String identifier;
 
-    @NotBlank
-    @Length(min = 6, max = 6)
+
     String code;
 
     @Override
@@ -29,11 +28,11 @@ public class ValidationRequest {
         if (this == o) return true;
         if (!(o instanceof ValidationRequest)) return false;
         ValidationRequest that = (ValidationRequest) o;
-        return getIdentifier().equals(that.getIdentifier()) && getCode().equals(that.getCode());
+        return getIdentifier().equals(that.getIdentifier());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdentifier(), getCode());
+        return Objects.hash(getIdentifier());
     }
 }

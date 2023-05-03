@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 @RestController
-@RequestMapping("messages/")
+@RequestMapping("/api/v1/messages")
 @CrossOrigin(origins = "http://localhost:4200")
 public class MessageController {
     private  final Random r = new Random();
@@ -38,7 +38,7 @@ public class MessageController {
     }
 
     @GetMapping("/usr/from/sms")
-    public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgBySmsRequest req){
+    public List<MessageResponse> getMessagesSentByUsr(@RequestBody MsgByPhoneRequest req){
         return ms.getAllSentBy(req);
     }
 
@@ -47,7 +47,7 @@ public class MessageController {
     public List<MessageResponse> getMessagesReceivedByUsr(@RequestBody MsgToEmailRequest req){ return ms.getAllReceivedBy(req);}
 
     @GetMapping("/usr/to/sms")
-    public List<MessageResponse> getMessagesReceivedByUsr(@RequestBody MsgToSmsRequest req){ return ms.getAllReceivedBy(req);}
+    public List<MessageResponse> getMessagesReceivedByUsr(@RequestBody MsgToPhoneRequest req){ return ms.getAllReceivedBy(req);}
 
     /*
     @GetMapping("/")

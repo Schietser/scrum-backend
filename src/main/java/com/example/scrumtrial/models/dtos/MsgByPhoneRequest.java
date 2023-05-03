@@ -3,6 +3,6 @@ package com.example.scrumtrial.models.dtos;
 import lombok.Data;
 
 @Data
-public class MsgToSmsRequest {
-    String sms;
+public class MsgByPhoneRequest {
+    private String phone;
 }

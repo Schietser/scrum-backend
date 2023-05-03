@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Install and Run" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="scrum" />
+    <module name="scrum-trial" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.scrumtrial.ScrumTrialApplication" />
     <method v="2">
       <option name="Make" enabled="true" />

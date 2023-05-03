@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class MessageService {
@@ -29,18 +28,18 @@ public class MessageService {
         return ue.map(user -> mr.findAllByFrom(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
     }
 
-    public List<MessageResponse> getAllSentBy(MsgBySmsRequest req) {
-        Optional<UserEntity> ue = ur.findUserEntityBySms(req.getSms());
+    public List<MessageResponse> getAllSentBy(MsgByPhoneRequest req) {
+        Optional<UserEntity> ue = ur.findUserEntityByPhone(req.getPhone());
         return ue.map(user -> mr.findAllByFrom(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
     }
 
-    public List<MessageResponse> getAllReceivedBy(MsgToSmsRequest req){
-        Optional<UserEntity> ue = ur.findUserEntityBySms(req.getSms());
+    public List<MessageResponse> getAllReceivedBy(MsgToPhoneRequest req){
+        Optional<UserEntity> ue = ur.findUserEntityByPhone(req.getPhone());
         return ue.map(user -> mr.findAllByToContains(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
     }
 
     public List<MessageResponse> getAllReceivedBy(MsgToEmailRequest req){
-        Optional<UserEntity> ue = ur.findUserEntityBySms(req.getEmail());
+        Optional<UserEntity> ue = ur.findUserEntityByPhone(req.getEmail());
         return ue.map(user -> mr.findAllByToContains(user).stream().map(MsgMapper::toResponse).collect(Collectors.toList())).orElseGet(List::of);
     }
 

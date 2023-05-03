@@ -61,11 +61,11 @@ public class EmailService {
             throw new IllegalArgumentException("emailToValidate cannot be null or blank");
         }
 
-        String now = String.valueOf(System.currentTimeMillis()).substring(0, 6);
+        String code = String.valueOf(System.currentTimeMillis()).substring(0, 6);
         Email from = new Email("intec.brussel@mail.be");
         Email to = new Email(emailToValidate);
         // Generate a validation code from timestamp
-        String validationMessage = "Validation code: " + now;
+        String validationMessage = "Validation code: " + code;
         Content content = new Content("text/plain", validationMessage);
         Mail mail = new Mail(from, "Email", to, content);
 
@@ -90,7 +90,7 @@ public class EmailService {
 
             // save the validation code to the database
             ValidationEntity v = vRepo.save(
-                new ValidationEntity(emailToValidate,now)
+                new ValidationEntity(emailToValidate,code)
             );
 
             log.info(

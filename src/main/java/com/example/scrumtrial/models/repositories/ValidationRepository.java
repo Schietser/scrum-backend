@@ -1,6 +1,7 @@
 package com.example.scrumtrial.models.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -12,6 +13,6 @@ public interface ValidationRepository extends MongoRepository<ValidationEntity, 
 
     void deleteByIdentifier(String identifier);
 
-    
 
+    Optional<ValidationEntity> findByIdentifierAndCode(String identifier, String code);
 }
