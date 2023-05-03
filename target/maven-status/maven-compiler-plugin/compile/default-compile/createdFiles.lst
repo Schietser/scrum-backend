@@ -10,10 +10,12 @@ com\example\scrumtrial\models\entities\ValidationEntity.class
 com\example\scrumtrial\models\dtos\CreateUserWithEmailReq.class
 com\example\scrumtrial\models\dtos\MsgBySmsRequest.class
 com\example\scrumtrial\models\dtos\NewMsgEmailToEmailReq.class
+com\example\scrumtrial\Flow\exceptions\EmailVerificationException.class
 com\example\scrumtrial\Flow\Services\MessageService.class
 com\example\scrumtrial\configurations\Securitycfg.class
 com\example\scrumtrial\models\entities\MessageEntity.class
 com\example\scrumtrial\models\repositories\MessageRepository.class
+com\example\scrumtrial\models\dtos\SendEmailReq.class
 com\example\scrumtrial\models\repositories\UserRepository.class
 com\example\scrumtrial\models\dtos\ValidationRequest.class
 com\example\scrumtrial\models\entities\UserEntity.class

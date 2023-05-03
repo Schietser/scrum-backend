@@ -1,5 +1,6 @@
 package com.example.scrumtrial.controllers;
 
+import com.example.scrumtrial.Flow.Services.EmailService;
 import com.example.scrumtrial.Flow.Services.MessageService;
 import com.example.scrumtrial.Flow.Services.UserService;
 import com.example.scrumtrial.models.dtos.*;
@@ -14,9 +15,16 @@ import java.util.Random;
 public class MessageController {
     private  final Random r = new Random();
     private final MessageService ms;
+    private final EmailService es;
 
-    public MessageController(UserService us, MessageService ms){
+    public MessageController(UserService us, MessageService ms, EmailService es){
         this.ms = ms;
+        this.es = es;
+    }
+
+    @PostMapping("/sendEmail")
+    public void sendEmail(@RequestBody SendEmailReq req){
+        this.es.sendEmail(req.getFrom(), req.getTo(), req.getSubject(), req.getBody());
     }
 
     @PostMapping("/addMsg")

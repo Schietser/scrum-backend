@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Install and Run" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="scrum" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.scrumtrial.ScrumTrialApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="clean install" />
+    </method>
+  </configuration>
+</component>

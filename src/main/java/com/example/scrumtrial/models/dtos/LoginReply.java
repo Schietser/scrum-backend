@@ -1,13 +1,15 @@
 package com.example.scrumtrial.models.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.Objects;
 //import lombok.experimental.Accessors;
 
 //@Accessors(fluent = true)
 @Getter
 @Setter
+@NoArgsConstructor
 public class LoginReply {
     @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     private String sessionToken;
@@ -19,5 +21,18 @@ public class LoginReply {
     // SUCCESS BEING NULL IS LOGICALLY PROBLEMATIC
     public LoginReply(boolean success){
         this.success = success;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LoginReply)) return false;
+        LoginReply that = (LoginReply) o;
+        return Objects.equals(getSessionToken(), that.getSessionToken());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getSessionToken());
     }
 }

@@ -2,8 +2,10 @@ package com.example.scrumtrial.controllers;
 
 import com.example.scrumtrial.Flow.Services.EmailService;
 import com.example.scrumtrial.Flow.Services.UserService;
+import com.example.scrumtrial.Flow.exceptions.EmailVerificationException;
 import com.example.scrumtrial.models.dtos.*;
 import com.twilio.Twilio;
+import com.twilio.exception.AuthenticationException;
 import com.twilio.rest.verify.v2.Service;
 import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.rest.verify.v2.service.VerificationCheck;
@@ -23,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 //import java.util.Optional;
 import java.util.function.Supplier;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @RestController
@@ -58,21 +61,22 @@ public class RegistrationController {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "channel must be either email or sms");
     }
 
-    private VerificationCheck checkVerificationCode(String identifier, String code) {
+    private VerificationCheck checkVerificationCode(@NotBlank String identifier, @NotBlank String code) throws IllegalArgumentException, EmailVerificationException {
 
-        if (identifier == null || identifier.isBlank()) {
-            throw new IllegalArgumentException("identifier cannot be null or blank");
+        VerificationCheck vc;
+
+        try {
+            vc = VerificationCheck.creator(
+                            this.ssid.getSid())
+                    .setTo(identifier)
+                    .setCode(code)
+                    .create();
+
+        } catch (AuthenticationException authEx) {
+            throw new EmailVerificationException(authEx.getMessage(), authEx);
         }
 
-        if (code == null || code.isBlank()) {
-            throw new IllegalArgumentException("code cannot be null or blank");
-        }
-
-        return VerificationCheck.creator(
-                this.ssid.getSid())
-                .setTo(identifier)
-                .setCode(code)
-                .create();
+        return vc;
     }
 
     private LoginReply validateAndSave(Object req, Supplier<String> idSupplier, Supplier<String> codeSupplier) {
@@ -99,34 +103,32 @@ public class RegistrationController {
     }
 
     @PostMapping("/usr/getCode/email")
-    public LoginReply sendVerificationCode(@RequestBody CreateUserWithEmailReq req) {
+    public void sendVerificationCode(@RequestBody CreateUserWithEmailReq req) {
         try {
             sendVerificationCode(req.getEmail(), "email");
-            return new LoginReply(true);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        } catch (IllegalArgumentException | EmailVerificationException ex) {
+            log.error(ex.getMessage(), ex);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
-    @PostMapping(value = "/usr/checkCode/email", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LoginReply createUserIfCodeIsValid(@RequestBody CheckNewUserEmail req) {
-        return validateAndSave(req, req::getEmail, req::getCode);
+    @PostMapping(value = "/usr/checkCode/email")
+    public Boolean createUserIfCodeIsValid(@RequestBody CheckNewUserEmail req) {
+        return validateAndSave(req, req::getEmail, req::getCode).getSuccess();
     }
 
     @PostMapping("/usr/getCode/sms")
-    public LoginReply sendVerificationCode(@RequestBody CreateUserWithSmsReq req) {
+    public void sendVerificationCode(@RequestBody CreateUserWithSmsReq req) {
         try {
             sendVerificationCode(req.getSms(), "sms");
-            return new LoginReply(true);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
     }
 
-    @PostMapping(value = "/usr/checkCode/sms", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LoginReply createUserIfCodeIsValid(@RequestBody CheckNewUserSms req) {
-        return validateAndSave(req, req::getSms, req::getCode);
+    @PostMapping(value = "/usr/checkCode/sms")
+    public Boolean createUserIfCodeIsValid(@RequestBody CheckNewUserSms req) {
+        return validateAndSave(req, req::getSms, req::getCode).getSuccess();
     }
 }

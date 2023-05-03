@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 @Document("users")
 @Getter
@@ -31,5 +32,18 @@ public class UserEntity {
         this.name = name;
         this.email = email;
         this.lastLogin = ZonedDateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getSms(), that.getSms());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getEmail(), getSms());
     }
 }

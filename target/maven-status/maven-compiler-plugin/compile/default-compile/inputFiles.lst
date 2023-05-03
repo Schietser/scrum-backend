@@ -1,9 +1,11 @@
 C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\controllers\LoginController.java
 C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\models\dtos\MsgByEmailRequest.java
 C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\controllers\RegistrationController.java
+C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\Flow\exceptions\EmailVerificationException.java
 C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\models\dtos\MsgBySmsRequest.java
 C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\models\dtos\LoginReply.java
 C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\configurations\Securitycfg.java
+C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\models\dtos\SendEmailReq.java
 C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\models\dtos\ValidationResponse.java
 C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\Flow\Services\EmailService.java
 C:\Users\intec\IdeaProjects\scrum\src\main\java\com\example\scrumtrial\models\repositories\MessageRepository.java
